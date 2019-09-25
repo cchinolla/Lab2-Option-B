@@ -1,0 +1,155 @@
+class Node(object):
+    # item = -1
+    # next = None
+    # password = ""
+
+    def __init__(self, data, next=None, count=1, tail=""):
+        self.data = data
+        self.count = count
+        self.next = next
+        self.tail = tail
+    # method to print the number of times a number is repeated
+    def print_count(self):
+        print("amount:", self.count)
+    #getters and setters
+    def get_data(self):
+        return self.data
+
+    def get_next(self):
+        return self.next
+
+    def set_next(self, new_next):
+        self.next = new_next
+
+
+#linked lists class
+class LinkedLists:
+
+    def __init__(self, head=None):
+        self.head = head
+
+    def empty(self):
+        # if list is empty return none
+        return self.head == None
+
+    #method to get length of list
+    def list_length(self):
+        count = 0
+        current_node = self.head
+        while current_node is not None:
+            # increase counter by one
+            count = count + 1
+            # jump to the linked node
+            current_node = current_node.next
+        return count
+
+
+    #add node to the end of the list
+    def append(self, new_data):
+        current = Node(new_data)
+        current.next = self.head
+        self.head = current
+
+    #add node in the beginning of the list
+    def prepend(self,new_data):
+        self.head = Node(new_data,self.head)
+
+    #method to check if there are repeating nodes
+    def duplicate(self, search_for):
+        current = self.head
+        while current is not None:
+            if current.data == search_for:
+                current.count += 1
+                return True
+            current = current.next
+        return False
+
+    #print list method
+    def printl(self):
+        curr = self.head
+        while curr is not None:
+            curr.print_count()
+            print(curr.data)
+            curr = curr.next
+
+    #bubble sort method
+    def bubble(self):
+        end = None
+        while end != self.head:
+            start = self.head
+            #while there is a next node
+            while start.next != end:
+                q = start.next
+                #if current node is greater than the next node
+                if start.count > q.count:
+                    start.data, q.data = q.data, start.data
+                    start.count, q.count = q.count, start.count
+                start = start.next
+            end = start
+
+    def merge(self):
+            curr = self.head
+            for N in range(1001):
+                if not curr: break
+                curr = curr.next
+            width, remainder = divmod(N, 2)
+
+            ans = []
+            curr = self.head
+            for i in range(2):
+                head = write = LinkedLists(None)
+                for j in range(width + (i < remainder)):
+                    write.next = write = LinkedLists(curr.data)
+                    if curr:
+                        curr = curr.next
+                ans.append(head.next)
+            return ans
+
+#initialize linked list
+linkedl = LinkedLists()
+
+
+arr ={}
+#open text file
+#with open(file = "testnum", encoding="utf-8", errors='ignore') as f:
+with open(file = "10-million-combos.txt", encoding="utf-8", errors='ignore') as f:
+    contents = f.readlines()
+
+for elem in contents:
+    txt = elem.split("   ")
+    if linkedl.duplicate(txt[-1]) == False:
+        linkedl.prepend(txt[-1])
+
+linkedl.printl()
+print("--------------------------------")
+
+
+linkedl.bubble()
+print("BUBBLE!!!!!!!!")
+linkedl.printl()
+
+print("---------------")
+print("MERGE!!!!!!!!")
+linkedl.merge()
+linkedl.printl()
+
+
+dict = {}
+#file = open("10-million-combos.txt","r")
+file = open("testnum","r")
+self_with_duplicates = file.readlines()
+print("--------------------------")
+print("DICTIONARY!!!!!!")
+for item in self_with_duplicates:
+    stuff = item.split(" ")
+    if stuff[-1] in dict: # You can assume this operation takes O(1)
+        dict[stuff[-1]] = dict[stuff[-1]] + 1
+    else:
+        dict[stuff[-1]] = 1
+for i in dict:
+    print(dict[i])
+
+
+
+
+
